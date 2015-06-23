@@ -14,7 +14,7 @@ huckabee = responses.detect { |response| response[:choice] == "Huckabee" }
 paul = responses.detect { |response| response[:choice] == "Paul" }
 cruz = responses.detect { |response| response[:choice] == "Cruz" }
 
-difference = first[:value] - second[:value]
+difference = rubio[:value] - walker[:value]
 negativechance = Statistics2.tdist(2,(difference/3)) 
 nchance = 1 - (Statistics2.tdist(2,(difference/3)))
 
