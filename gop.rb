@@ -13,20 +13,26 @@ carson = responses.detect { |response| response[:choice] == "Carson" }
 huckabee = responses.detect { |response| response[:choice] == "Huckabee" }
 paul = responses.detect { |response| response[:choice] == "Paul" }
 cruz = responses.detect { |response| response[:choice] == "Cruz" }
-#Change names here to find different odds
-difference = bush[:value] - rubio[:value]
-negativechance = Statistics2.tdist(2,(difference/3)) 
-nchance = 1 - (Statistics2.tdist(2,(difference/3)))
+trump = responses.detect { |response| response[:choice] == "Trump" }
+
+difference = carson[:value] - walker[:value]
+negativechance = Statistics2.tdist(2,((difference/100)/0.03)) 
+nchance = 1 - (Statistics2.tdist(2,((difference/100)/0.03)))
 
 if difference < 0
-then puts "#{nchance.to_f*100}""%" + " Rubio."
-	 puts "#{(1-nchance.to_f)*100}""%" + " Bush."
+then puts "#{nchance.to_f*100}""%" + " Walker."
+	 puts "#{(1-nchance.to_f)*100}""%" + " Carson."
 	 puts "Based on latest poll at Pollster.com"
-else puts "#{negativechance.to_f*100}""%" " Bush."
-	 puts "#{(1-negativechance.to_f)*100}""%" + " Rubio."
+else puts "#{negativechance.to_f*100}""%" " Carson."
+	 puts "#{(1-negativechance.to_f)*100}""%" + " Walker."
 	 puts "Based on latest poll at Pollster.com"
 end
 
+runcsv = File.open("csv/gop.csv", "w+")
+  runcsv.puts negativechance.to_f*100
+  runcsv.puts "Carson"
+  runcsv.puts nchance.to_f*100
+  runcsv.puts "Walker"
 
 
 

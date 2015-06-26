@@ -25,4 +25,10 @@ else puts "#{negativechance.to_f*100}""%" " Clinton."
 	 puts "Based on latest poll at Pollster.com"
 end
 
+runcsv = File.open("csv/dem.csv", "w+")
+  runcsv.puts negativechance.to_f*100
+  runcsv.puts "Clinton"
+  runcsv.puts nchance.to_f*100
+  runcsv.puts "Sanders"
+
 
