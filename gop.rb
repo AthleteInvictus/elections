@@ -10,31 +10,34 @@ rubio = responses.detect { |response| response[:choice] == "Rubio" }
 bush = responses.detect { |response| response[:choice] == "Jeb Bush" }
 walker = responses.detect { |response| response[:choice] == "Walker" }
 carson = responses.detect { |response| response[:choice] == "Carson" }
-huckabee = responses.detect { |response| response[:choice] == "Huckabee" }
-paul = responses.detect { |response| response[:choice] == "Paul" }
-cruz = responses.detect { |response| response[:choice] == "Cruz" }
 trump = responses.detect { |response| response[:choice] == "Trump" }
 
-difference = carson[:value] - walker[:value]
-negativechance = Statistics2.tdist(2,((difference/100)/0.03)) 
-nchance = 1 - (Statistics2.tdist(2,((difference/100)/0.03)))
+difference = (bush[:value] - trump[:value]).to_f
+firstpart = (difference/3).to_f
+tdist = (Statistics2.tdist(2,firstpart)).to_f
+tdistabs = (Statistics2.tdist(2,firstpart.abs)).to_f
+percent = tdist*100
+percentabs = tdistabs*100
+opercent = (1-tdist)*100
+opercentabs = (1-tdistabs)*100
 
-if difference < 0
-then puts "#{nchance.to_f*100}""%" + " Walker."
-	 puts "#{(1-nchance.to_f)*100}""%" + " Carson."
-	 puts "Based on latest poll at Pollster.com"
-else puts "#{negativechance.to_f*100}""%" " Carson."
-	 puts "#{(1-negativechance.to_f)*100}""%" + " Walker."
-	 puts "Based on latest poll at Pollster.com"
-end
+case 
+  when difference < 0
+    puts "#{opercentabs.round(2)}""%" " Bush."
+    puts "#{100-opercentabs.round(2)}""%" " Trump."
+    puts "Based on latest poll at Pollster.com"
+  when difference > 0
+    puts "#{(percentabs.round(2))}""%" " Trump."
+    puts "#{(opercentabs.round(2))}""%" " Bush."
+    puts "Based on latest poll at Pollster.com"
+  else 
+	puts "An error occurred."
+	puts "Seek help at:"
+	puts "github.com/AthleteInvictus"
+  end
 
 runcsv = File.open("csv/gop.csv", "w+")
-  runcsv.puts negativechance.to_f*100
-  runcsv.puts "Carson"
-  runcsv.puts nchance.to_f*100
-  runcsv.puts "Walker"
-
-
-
-
-    
+  runcsv.puts (opercent.round(2)).abs
+  runcsv.puts "Trump"
+  runcsv.puts (percent.round(2)).abs
+  runcsv.puts "Bush"
