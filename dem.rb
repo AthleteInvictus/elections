@@ -4,16 +4,18 @@ require 'pollster'
 require 'uri'
 include Pollster
 
+puts "Enter a name:"
+puts "Options are Clinton, Sanders, Biden, O'Malley, Webb"
+answer = gets.chomp
+puts "Enter another name, same options:"
+answer2 = gets.chomp
 
 poll = Poll.where(:chart => '2016-national-democratic-primary').first
 responses = poll.questions.detect { |question| question.chart == '2016-national-democratic-primary' }.responses
-clinton = responses.detect { |response| response[:choice] == "Clinton" }
-sanders = responses.detect { |response| response[:choice] == "Sanders" }
-biden = responses.detect { |response| response[:choice] == "Biden" }
-omalley = responses.detect { |response| response[:choice] == "O'Malley" }
-webb = responses.detect { |response| response[:choice] == "Webb" }
+dude = responses.detect { |response| response[:choice] == "#{answer}" }
+dude2 = responses.detect { |response| response[:choice] == "#{answer2}" }
 
-difference = (sanders[:value] - clinton[:value]).to_f
+difference = (dude[:value] - dude2[:value]).to_f
 firstpart = (difference/3).to_f
 tdist = (Statistics2.tdist(2,firstpart)).to_f
 tdistabs = (Statistics2.tdist(2,firstpart.abs)).to_f
@@ -24,12 +26,18 @@ opercentabs = (1-tdistabs)*100
 
 case 
   when difference < 0
-    puts "#{100-opercentabs.round(2)}""%" " Clinton."
-    puts "#{opercentabs.round(2)}""%" " Sanders."
+    puts " "
+    puts "#{opercentabs.round(2)}""%" " #{answer}."
+    puts "#{100-opercentabs.round(2)}""%" " #{answer2}."
     puts "Based on latest poll at Pollster.com"
   when difference > 0
-    puts "#{(percentabs.round(2))}""%" " Clinton."
-    puts "#{(opercentabs.round(2))}""%" " Sanders."
+    puts " "
+    puts "#{(opercentabs.round(2))}""%" " #{answer2}."
+    puts "#{(percentabs.round(2))}""%" " #{answer}."
+    puts "Based on latest poll at Pollster.com"
+  when difference = 0
+    puts "50% #{answer}."
+    puts "50% #{answer2}."
     puts "Based on latest poll at Pollster.com"
   else 
 	puts "An error occurred."
@@ -37,8 +45,8 @@ case
 	puts "github.com/AthleteInvictus"
   end
 
-runcsv = File.open("csv/gop.csv", "w+")
+runcsv = File.open("csv/dem.csv", "w+")
   runcsv.puts (opercent.round(2)).abs
-  runcsv.puts "Sanders"
+  runcsv.puts "#{answer2}"
   runcsv.puts (percent.round(2)).abs
-  runcsv.puts "Clinton"
+  runcsv.puts "#{answer}"
