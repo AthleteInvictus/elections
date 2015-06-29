@@ -5,8 +5,8 @@ require 'uri'
 include Pollster
 
 
-poll = Poll.where(:chart => '2016-national-democratic-primary').first
-responses = poll.questions.detect { |question| question.chart == '2016-national-democratic-primary' }.responses
+poll = Poll.where(:chart => '2016-iowa-presidential-democratic-primary').first
+responses = poll.questions.detect { |question| question.chart == '2016-iowa-presidential-democratic-primary' }.responses
 clinton = responses.detect { |response| response[:choice] == "Clinton" }
 sanders = responses.detect { |response| response[:choice] == "Sanders" }
 biden = responses.detect { |response| response[:choice] == "Biden" }
@@ -37,8 +37,9 @@ case
 	puts "github.com/AthleteInvictus"
   end
 
-runcsv = File.open("csv/gop.csv", "w+")
+runcsv = File.open("csv/iowadem.csv", "w+")
   runcsv.puts (opercent.round(2)).abs
   runcsv.puts "Sanders"
   runcsv.puts (percent.round(2)).abs
   runcsv.puts "Clinton"
+
