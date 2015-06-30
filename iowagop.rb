@@ -5,7 +5,7 @@ require 'uri'
 include Pollster
 
 puts "Enter a name:"
-puts "Options are Rubio, Jeb Bush, Walker, Carson, Trump"
+puts "Options are Rubio, Bush, Walker, Carson, Trump"
 answer = gets.chomp
 puts "Enter another name, same options:"
 answer2 = gets.chomp
