@@ -45,8 +45,7 @@ case
 	puts "github.com/AthleteInvictus"
   end
 
-runcsv = File.open("csv/iowagop.csv", "w+")
-  runcsv.puts (opercent.round(2)).abs
-  runcsv.puts "#{answer2}"
-  runcsv.puts (percent.round(2)).abs
-  runcsv.puts "#{answer}"
+CSV.open("csv/iowagop.csv", "w") do |csv|
+ csv << [answer, answer2]
+ csv << [percent.round(2).abs, opercent.round(2).abs]
+end
