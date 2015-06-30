@@ -45,7 +45,7 @@ case
 	puts "github.com/AthleteInvictus"
   end
 
-CSV.open("csv/dem.csv", "w") do |csv|
+CSV.open("csv_main/dem.csv", "w") do |csv|
  csv << [answer, answer2]
  csv << [percent.round(2).abs, opercent.round(2).abs]
 end

@@ -46,7 +46,7 @@ case
   end
 
 
-CSV.open("csv/gop.csv", "w") do |csv|
+CSV.open("csv_main/gop.csv", "w") do |csv|
  csv << [answer, answer2]
  csv << [percent.round(2).abs, opercent.round(2).abs]
 end
