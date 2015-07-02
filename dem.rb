@@ -12,13 +12,13 @@ answer = gets.chomp
 poll = Poll.where(:chart => '2016-national-democratic-primary').first
 responses = poll.questions.detect { |question| question.chart == '2016-national-democratic-primary' }.responses
 dude = responses.detect { |response| response[:choice] == "#{answer}" }
-sanders = responses.detect { |response| response[:choice] == "Sanders" }
 clinton = responses.detect { |response| response[:choice] == "Clinton" }
+sanders = responses.detect { |response| response[:choice] == "Sanders" }
 biden = responses.detect { |response| response[:choice] == "Biden" }
 omalley = responses.detect { |response| response[:choice] == "O'Malley" }
 webb = responses.detect { |response| response[:choice] == "Webb" }
 
-difference1 = (dude[:value] - clinton[:value]).to_f
+difference1 = (dude[:value] - sanders[:value]).to_f
 firstpart1 = (difference1/3).to_f
 tdist1 = (Statistics2.tdist(2,firstpart1)).to_f
 tdistabs1 = (Statistics2.tdist(2,firstpart1.abs)).to_f
@@ -28,16 +28,16 @@ opercent1 = (1-tdist1)
 opercentabs1 = (1-tdistabs1)
 case 
   when difference1 < 0
-  use1 = opercentabs1.round(2)
+  use1 = opercentabs1
   when difference1 > 0
-  use1 = percentabs1.round(2)
+  use1 = percentabs1
   when difference1 = 0
   use1 = 0.5
   else 
   puts "Nothing"
 end
 
-difference2 = (dude[:value] - sanders[:value]).to_f
+difference2 = (dude[:value] - clinton[:value]).to_f
 firstpart2 = (difference2/3).to_f
 tdist2 = (Statistics2.tdist(2,firstpart2)).to_f
 tdistabs2 = (Statistics2.tdist(2,firstpart2.abs)).to_f
@@ -47,9 +47,9 @@ opercent2 = (1-tdist2)
 opercentabs2 = (1-tdistabs2)
 case 
   when difference2 < 0
-  use2 = opercentabs2.round(2)
+  use2 = opercentabs2
   when difference2 > 0
-  use2 = percentabs2.round(2)
+  use2 = percentabs2
   when difference2 = 0
   use2 = 0.5
   else 
@@ -66,9 +66,9 @@ opercent3 = (1-tdist3)
 opercentabs3 = (1-tdistabs3)
 case 
   when difference3 < 0
-  use3 = opercentabs3.round(2)
+  use3 = opercentabs3
   when difference3 > 0
-  use3 = percentabs3.round(2)
+  use3 = percentabs3
   when difference3 = 0
   use3 = 0.5
   else 
@@ -85,9 +85,9 @@ opercent4 = (1-tdist4)
 opercentabs4 = (1-tdistabs4)
 case 
   when difference4 < 0
-  use4 = opercentabs4.round(2)
+  use4 = opercentabs4
   when difference4 > 0
-  use4 = percentabs4.round(2)
+  use4 = percentabs4
   when difference4 = 0
   use4 = 0.5
   else 
@@ -104,32 +104,31 @@ opercent5 = (1-tdist5)
 opercentabs5 = (1-tdistabs5)
 case 
   when difference5 < 0
-  use5 = opercentabs5.round(2)
+  use5 = opercentabs5
   when difference5 > 0
-  use5 = percentabs5.round(2)
+  use5 = percentabs5
   when difference5 = 0
   use5 = 0.5
   else 
   puts "Nothing"
 end
 
-
 case
-  when answer = "Clinton"
-    clinton_score = ((use2*use3*use4*use5)*100).round(2)
-    puts "#{clinton_score}""%"
   when answer = "Sanders"
-	sanders_score = ((use1*use3*use4*use5)*100).round(2)
-	puts "#{sanders_score}""%"
+    sanders_score = ((use2*use3*use4*use5))
+    puts "#{(sanders_score*200).round(2)}""%"
+  when answer = "Clinton"
+	clinton_score = ((use1*use3*use4*use5))
+	puts "#{(clinton_score*200).round(2)}""%"
   when answer = "Biden"
-    biden_score = ((use1*use2*use4*use5)*100).round(2)
-    puts "#{biden_score}""%"
+    biden_score = ((use1*use2*use4*use5))
+    puts "#{(biden_score*200).round(2)}""%"
   when answer = "O'Malley"
-    omalley_score = ((use1*use2*use3*use5)*100).round(2)
-    puts "#{omalley_score}""%"
+    omalley_score = ((use1*use2*use3*use5))
+    puts "#{(omalley_score*200).round(2)}""%"
   when answer = "Webb"
-    webb_score = ((use1*use2*use3*use4)*100).round(2)
-    puts "#{webb_score}""%"
+    webb_score = ((use1*use2*use3*use4))
+    puts "#{(webb_score*200).round(2)}""%"
   else
     puts "Wrong input."
 end

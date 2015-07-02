@@ -6,13 +6,13 @@ include Pollster
 
 
 puts "Enter a name:"
-puts "Options are Jeb Bush, Trump, Carson, Walker, Rubio"
+puts "Options are Bush, Trump, Carson, Walker, Rubio"
 answer = gets.chomp
 
 poll = Poll.where(:chart => '2016-national-gop-primary').first
 responses = poll.questions.detect { |question| question.chart == '2016-national-gop-primary' }.responses
 dude = responses.detect { |response| response[:choice] == "#{answer}" }
-bush = responses.detect { |response| response[:choice] == "Jeb Bush" }
+bush = responses.detect { |response| response[:choice] == "Bush" }
 trump = responses.detect { |response| response[:choice] == "Trump" }
 carson = responses.detect { |response| response[:choice] == "Carson" }
 walker = responses.detect { |response| response[:choice] == "Walker" }
@@ -116,19 +116,19 @@ end
 
 case
   when answer = "Trump"
-    trump_score = ((use2*use3*use4*use5)*100).round(2)
+    trump_score = ((use2*use3*use4*use5)*200).round(2)
     puts "#{trump_score}""%"
   when answer = "Jeb Bush"
-	bush_score = ((use1*use3*use4*use5)*100).round(2)
+	bush_score = ((use1*use3*use4*use5)*200).round(2)
 	puts "#{bush_score}""%"
   when answer = "Carson"
-    carson_score = ((use1*use2*use4*use5)*100).round(2)
+    carson_score = ((use1*use2*use4*use5)*200).round(2)
     puts "#{carson_score}""%"
   when answer = "Walker"
-    walker_score = ((use1*use2*use3*use5)*100).round(2)
+    walker_score = ((use1*use2*use3*use5)*200).round(2)
     puts "#{walker_score}""%"
   when answer = "Rubio"
-    rubio_score = ((use1*use2*use3*use4)*100).round(2)
+    rubio_score = ((use1*use2*use3*use4)*200).round(2)
     puts "#{rubio_score}""%"
   else
     puts "Wrong input."
