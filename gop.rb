@@ -6,19 +6,19 @@ include Pollster
 
 
 puts "Enter a name:"
-puts "Options are Bush, Trump, Carson, Walker, Rubio"
+puts "Options are Trump, Jeb Bush, Carson, Rand Paul, Rubio"
 answer = gets.chomp
 
 poll = Poll.where(:chart => '2016-national-gop-primary').first
 responses = poll.questions.detect { |question| question.chart == '2016-national-gop-primary' }.responses
 dude = responses.detect { |response| response[:choice] == "#{answer}" }
-bush = responses.detect { |response| response[:choice] == "Bush" }
 trump = responses.detect { |response| response[:choice] == "Trump" }
+bush = responses.detect { |response| response[:choice] == "Jeb Bush" }
 carson = responses.detect { |response| response[:choice] == "Carson" }
-walker = responses.detect { |response| response[:choice] == "Walker" }
+paul = responses.detect { |response| response[:choice] == "Rand Paul" }
 rubio = responses.detect { |response| response[:choice] == "Rubio" }
 
-difference1 = (dude[:value] - trump[:value]).to_f
+difference1 = (dude[:value] - bush[:value]).to_f
 firstpart1 = (difference1/3).to_f
 tdist1 = (Statistics2.tdist(2,firstpart1)).to_f
 tdistabs1 = (Statistics2.tdist(2,firstpart1.abs)).to_f
@@ -28,16 +28,16 @@ opercent1 = (1-tdist1)
 opercentabs1 = (1-tdistabs1)
 case 
   when difference1 < 0
-  use1 = opercentabs1.round(2)
+  use1 = opercentabs1
   when difference1 > 0
-  use1 = percentabs1.round(2)
+  use1 = percentabs1
   when difference1 = 0
   use1 = 0.5
   else 
   puts "Nothing"
 end
 
-difference2 = (dude[:value] - bush[:value]).to_f
+difference2 = (dude[:value] - trump[:value]).to_f
 firstpart2 = (difference2/3).to_f
 tdist2 = (Statistics2.tdist(2,firstpart2)).to_f
 tdistabs2 = (Statistics2.tdist(2,firstpart2.abs)).to_f
@@ -47,9 +47,9 @@ opercent2 = (1-tdist2)
 opercentabs2 = (1-tdistabs2)
 case 
   when difference2 < 0
-  use2 = opercentabs2.round(2)
+  use2 = opercentabs2
   when difference2 > 0
-  use2 = percentabs2.round(2)
+  use2 = percentabs2
   when difference2 = 0
   use2 = 0.5
   else 
@@ -66,16 +66,16 @@ opercent3 = (1-tdist3)
 opercentabs3 = (1-tdistabs3)
 case 
   when difference3 < 0
-  use3 = opercentabs3.round(2)
+  use3 = opercentabs3
   when difference3 > 0
-  use3 = percentabs3.round(2)
+  use3 = percentabs3
   when difference3 = 0
   use3 = 0.5
   else 
   puts "Nothing"
 end
 
-difference4 = (dude[:value] - walker[:value]).to_f
+difference4 = (dude[:value] - paul[:value]).to_f
 firstpart4 = (difference4/3).to_f
 tdist4 = (Statistics2.tdist(2,firstpart4)).to_f
 tdistabs4 = (Statistics2.tdist(2,firstpart4.abs)).to_f
@@ -85,9 +85,9 @@ opercent4 = (1-tdist4)
 opercentabs4 = (1-tdistabs4)
 case 
   when difference4 < 0
-  use4 = opercentabs4.round(2)
+  use4 = opercentabs4
   when difference4 > 0
-  use4 = percentabs4.round(2)
+  use4 = percentabs4
   when difference4 = 0
   use4 = 0.5
   else 
@@ -104,34 +104,32 @@ opercent5 = (1-tdist5)
 opercentabs5 = (1-tdistabs5)
 case 
   when difference5 < 0
-  use5 = opercentabs5.round(2)
+  use5 = opercentabs5
   when difference5 > 0
-  use5 = percentabs5.round(2)
+  use5 = percentabs5
   when difference5 = 0
   use5 = 0.5
   else 
   puts "Nothing"
 end
 
-
 case
+  when answer = "Bush"
+    bush_score = ((use2*use3*use4*use5))
+    puts "#{(bush_score*100).round(2)}""%"
   when answer = "Trump"
-    trump_score = ((use2*use3*use4*use5)*200).round(2)
-    puts "#{trump_score}""%"
-  when answer = "Jeb Bush"
-	bush_score = ((use1*use3*use4*use5)*200).round(2)
-	puts "#{bush_score}""%"
+	trump_score = ((use1*use3*use4*use5))
+	puts "#{(trump_score*100).round(2)}""%"
   when answer = "Carson"
-    carson_score = ((use1*use2*use4*use5)*200).round(2)
-    puts "#{carson_score}""%"
-  when answer = "Walker"
-    walker_score = ((use1*use2*use3*use5)*200).round(2)
-    puts "#{walker_score}""%"
+    carson_score = ((use1*use2*use4*use5))
+    puts "#{(carson_score*100).round(2)}""%"
+  when answer = "Rand Paul"
+    paul_score = ((use1*use2*use3*use5))
+    puts "#{(paul_score*100).round(2)}""%"
   when answer = "Rubio"
-    rubio_score = ((use1*use2*use3*use4)*200).round(2)
-    puts "#{rubio_score}""%"
+    rubio_score = ((use1*use2*use3*use4))
+    puts "#{(rubio_score*100).round(2)}""%"
   else
     puts "Wrong input."
 end
-
 

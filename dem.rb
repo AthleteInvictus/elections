@@ -116,19 +116,19 @@ end
 case
   when answer = "Sanders"
     sanders_score = ((use2*use3*use4*use5))
-    puts "#{(sanders_score*200).round(2)}""%"
+    puts "#{(sanders_score*100).round(2)}""%"
   when answer = "Clinton"
 	clinton_score = ((use1*use3*use4*use5))
-	puts "#{(clinton_score*200).round(2)}""%"
+	puts "#{(clinton_score*100).round(2)}""%"
   when answer = "Biden"
     biden_score = ((use1*use2*use4*use5))
-    puts "#{(biden_score*200).round(2)}""%"
+    puts "#{(biden_score*100).round(2)}""%"
   when answer = "O'Malley"
     omalley_score = ((use1*use2*use3*use5))
-    puts "#{(omalley_score*200).round(2)}""%"
+    puts "#{(omalley_score*100).round(2)}""%"
   when answer = "Webb"
     webb_score = ((use1*use2*use3*use4))
-    puts "#{(webb_score*200).round(2)}""%"
+    puts "#{(webb_score*100).round(2)}""%"
   else
     puts "Wrong input."
 end
